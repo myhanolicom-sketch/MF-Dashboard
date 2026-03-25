@@ -35,9 +35,7 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
 
-      <button (click)="refreshMetrics()" class="refresh-btn">
-        🔄 Actualizar Datos
-      </button>
+     
     </div>
   `,
   styles: [`

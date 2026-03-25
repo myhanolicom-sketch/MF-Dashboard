@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
   template: `
     <div class="dashboard-container">
       <header class="dashboard-header">
-        <h1>📊 Dashboard de Analítica</h1>
+        <h1>Administracion de usuarios</h1>
       </header>
       <main class="dashboard-content">
         <router-outlet></router-outlet>
@@ -22,7 +22,7 @@ import { RouterModule } from '@angular/router';
     }
 
     .dashboard-header {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      background: linear-gradient(135deg, #bfc7c7 0%, #f5576c 100%);
       color: white;
       padding: 2rem;
       border-radius: 8px;
