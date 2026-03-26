@@ -1,106 +1,97 @@
 import { Component, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+}
+
+
 @Component({
   selector: 'app-analytics',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="analytics">
-      <h2>📈 Analítica en Tiempo Real MultiRepo</h2>
-
-      <div class="analytics-grid">
-        <div class="metric-card">
-          <div class="metric-label">Visitas Hoy</div>
-          <div class="metric-value">{{ visitsToday() }}</div>
-          <div class="metric-trend up">↑ +12% vs ayer</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-label">Usuarios Activos</div>
-          <div class="metric-value">{{ activeUsers() }}</div>
-          <div class="metric-trend up">↑ +8% vs ayer</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-label">Tasa de Conversión</div>
-          <div class="metric-value">{{ conversionRate() | number:'1.1-2' }}%</div>
-          <div class="metric-trend down">↓ -2% vs ayer</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-label">Valor Medio de Pedido</div>
-          <div class="metric-value">{{ averageOrder() | currency }}</div>
-          <div class="metric-trend up">↑ +5% vs ayer</div>
-        </div>
+    <div class="users">
+      <h2>Gestión de Usuarios</h2>
+      
+      <div class="users-table">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users()">
+              <td>{{ user.id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <button (click)="editUser(user)">Editar</button>
+                <button (click)="deleteUser(user.id)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
-     
     </div>
   `,
   styles: [`
-    .analytics {
+    .users {
       padding: 1rem;
     }
-
+    
     h2 {
       color: #333;
       margin-bottom: 2rem;
     }
-
-    .analytics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .metric-card {
+    
+    .users-table {
       background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      border-left: 4px solid #f5576c;
+      border-radius: 4px;
+      overflow: hidden;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
-    .metric-label {
-      color: #666;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
-
-    .metric-value {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #f5576c;
-      margin: 0.5rem 0;
+    
+    thead {
+      background: #f8f9fa;
     }
-
-    .metric-trend {
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
+    
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e9ecef;
     }
-
-    .metric-trend.up {
-      color: #10b981;
+    
+    tr:hover {
+      background: #f8f9fa;
     }
-
-    .metric-trend.down {
-      color: #ef4444;
-    }
-
-    .refresh-btn {
-      background: #f5576c;
+    
+    button {
+      background: #667eea;
       color: white;
       border: none;
-      padding: 0.75rem 1.5rem;
+      padding: 0.5rem 1rem;
       border-radius: 4px;
       cursor: pointer;
-      font-weight: 500;
+      margin-right: 0.5rem;
     }
-
-    .refresh-btn:hover {
-      background: #e53e50;
+    
+    button:hover {
+      background: #5568d3;
     }
   `]
 })
@@ -126,5 +117,19 @@ export class AnalyticsComponent {
     this.activeUsers.update(u => u + Math.floor(Math.random() * 20) - 10);
     this.conversionRate.update(r => Math.max(1, r + (Math.random() - 0.5)));
     this.averageOrder.update(a => a + (Math.random() - 0.5) * 10);
+  }
+
+   users = signal<User[]>([
+    { id: 1, name: 'Juan Pérez', email: 'juan@example.com', role: 'Admin' },
+    { id: 2, name: 'María García', email: 'maria@example.com', role: 'User' },
+    { id: 3, name: 'Carlos López', email: 'carlos@example.com', role: 'User' }
+  ]);
+
+  editUser(user: User) {
+    console.log('Editando usuario:', user);
+  }
+
+  deleteUser(id: number) {
+    this.users.update(users => users.filter(u => u.id !== id));
   }
 }
