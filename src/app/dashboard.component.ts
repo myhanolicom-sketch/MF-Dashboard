@@ -8,37 +8,37 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
   template: `
     <div class="dashboard-container">
-      
-      <main class="dashboard-content">
-        <router-outlet></router-outlet>
-      </main>
+      <router-outlet></router-outlet>
     </div>
   `,
   styles: [`
-    
-.dashboard-container {
+    :host {
+      display: flex;
+      justify-content: center;
       width: 100%;
+      min-height: auto;
+      padding: 1.25rem;
+      background: #fff;
     }
-    
+
+    .dashboard-container {
+      width: 100%;
+      display: block;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
     .dashboard-header {
-      background: linear-gradient(135deg, #c9436b 0%, #a24b85 100%);
+      background: linear-gradient(135deg, #bfc7c7 0%, #f5576c 100%);
       color: white;
       padding: 2rem;
       border-radius: 8px;
       margin-bottom: 2rem;
     }
-    
+
     .dashboard-header h1 {
       margin: 0;
     }
-    
-    .dashboard-content {
-      display: block;
-      width: 100%;
-      min-height: calc(90vh - 80px);
-      padding: 1rem 0;
-    }
-
   `]
 })
 export class DashboardComponent {}

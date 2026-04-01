@@ -8,7 +8,6 @@ interface User {
   role: string;
 }
 
-
 @Component({
   selector: 'app-analytics',
   standalone: true,
@@ -21,19 +20,18 @@ interface User {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Rol</th>
+              
+              <th>Usuario</th>
+              <th>Perfil</th>
+              <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let user of users()">
-              <td>{{ user.id }}</td>
               <td>{{ user.name }}</td>
-              <td>{{ user.email }}</td>
               <td>{{ user.role }}</td>
+              <td>{{ user.email }}</td>
               <td>
                 <button (click)="editUser(user)">Editar</button>
                 <button (click)="deleteUser(user.id)">Eliminar</button>
@@ -44,7 +42,7 @@ interface User {
       </div>
     </div>
   `,
-  styles: [`
+ styles: [`
     .users {
       padding: 1rem;
     }
@@ -119,7 +117,7 @@ export class AnalyticsComponent {
     this.averageOrder.update(a => a + (Math.random() - 0.5) * 10);
   }
 
-   users = signal<User[]>([
+ users = signal<User[]>([
     { id: 1, name: 'Juan Pérez', email: 'juan@example.com', role: 'Admin' },
     { id: 2, name: 'María García', email: 'maria@example.com', role: 'User' },
     { id: 3, name: 'Carlos López', email: 'carlos@example.com', role: 'User' }
@@ -132,4 +130,5 @@ export class AnalyticsComponent {
   deleteUser(id: number) {
     this.users.update(users => users.filter(u => u.id !== id));
   }
+
 }

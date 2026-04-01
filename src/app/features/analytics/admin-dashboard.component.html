@@ -1,0 +1,67 @@
+<div class="dashboard-content">
+  <form [formGroup]="filterForm" class="filters-form">
+    
+    
+
+    <div class="filter-row-user-add">
+      <div class="user-add-section">
+        <label>Agregar Usuario:</label>
+        <div class="user-input-group">
+          <p-autocomplete
+            formControlName="selectedUser"
+            [suggestions]="filteredAdUsers"
+            (completeMethod)="filterAdUsers($event)"
+            placeholder="Buscar usuario en Active Directory..."
+            [dropdown]="true"
+            [forceSelection]="true"
+            field="usuario"
+            inputId="selectedUser">
+          </p-autocomplete>
+          <button pButton type="button" icon="pi pi-plus" class="p-button-success p-button-rounded" (click)="addUser()" pTooltip="Agregar usuario" tooltipPosition="top"></button>
+        </div>
+      </div>
+    </div>
+
+   
+  </form>
+
+  <p-table 
+    [value]="filteredData()" 
+    [paginator]="true" 
+    [rows]="5" 
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    responsiveLayout="scroll"
+    styleClass="p-datatable-sm p-datatable-striped">
+    
+    <ng-template #caption>
+    
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        <th>Usuario</th>
+        <th>Perfil</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-user>
+      <tr>
+        <td>{{ user.usuario }}</td>
+        <td>{{ user.perfil }}</td>
+        <td>
+          <p-tag [value]="user.estado" [severity]="getEstadoSeverity(user.estado)"></p-tag>
+        </td>
+        <td>
+          <div class="acciones-cell">
+            <button pButton type="button" icon="pi pi-eye" class="p-button-text p-button-rounded" pTooltip="Ver detalle" tooltipPosition="top" (click)="showDetailModal(user)"></button>
+            <button pButton type="button" icon="pi pi-exchange" class="p-button-text p-button-rounded" pTooltip="Cambiar estado" tooltipPosition="top" (click)="toggleEstado(user)"></button>
+            <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-rounded p-button-danger" pTooltip="Eliminar" tooltipPosition="top" (click)="deleteUser(user)"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
